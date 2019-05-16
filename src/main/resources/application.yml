@@ -1,0 +1,38 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    name: mydata
+    url: jdbc:mysql://127.0.0.1:3306/powerinspeck?characterEncoding=utf-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Hongkong
+    username: root
+    password: 123
+    # 使用dbcp2数据源
+    type: org.apache.commons.dbcp2.BasicDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    filters: stat
+    maxActive: 20   #连接池的最大值，同一时间可以从池分配的最多连接数量，0时无限制
+    initialSize: 1   #连接初始值，连接池启动时创建的连接数量的初始值
+    maxWait: 60000
+    minIdle: 1       #最小空闲值.当空闲的连接数少于阀值时，连接池就会预申请去一些连接，以免洪峰来时来不及申请
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true  #是否对已备语句进行池管理（布尔值），是否对PreparedStatement进行缓存
+    maxOpenPreparedStatements: 20
+
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    encoding: UTF-8
+    mode: HTML
+  mvc:
+    static-path-pattern: /static/**
+
+mybatis:
+  mapper-locations: classpath:mapping/*.xml  #classpath就是应用程序resources的路径
+  type-aliases-package: org.hsc.demo.entity

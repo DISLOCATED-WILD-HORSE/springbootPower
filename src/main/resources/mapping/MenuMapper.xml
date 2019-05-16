@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.hsc.demo.mapper.MenuMapper" >
+  <resultMap id="BaseResultMap" type="org.hsc.demo.entity.Menu" >
+    <id column="MENUID" property="menuid" jdbcType="INTEGER" />
+    <result column="MENUNAME" property="menuname" jdbcType="VARCHAR" />
+    <result column="MENUSRC" property="menusrc" jdbcType="VARCHAR" />
+    <result column="PARENTID" property="parentid" jdbcType="INTEGER" />
+    <result column="LEVEL" property="level" jdbcType="INTEGER" />
+    <result column="ISCHILD" property="ischild" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    MENUID, MENUNAME, MENUSRC, PARENTID, LEVEL, ISCHILD
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from menu
+    where MENUID = #{menuid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from menu
+    where MENUID = #{menuid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.hsc.demo.entity.Menu" >
+    insert into menu (MENUID, MENUNAME, MENUSRC, 
+      PARENTID, LEVEL, ISCHILD
+      )
+    values (#{menuid,jdbcType=INTEGER}, #{menuname,jdbcType=VARCHAR}, #{menusrc,jdbcType=VARCHAR}, 
+      #{parentid,jdbcType=INTEGER}, #{level,jdbcType=INTEGER}, #{ischild,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.hsc.demo.entity.Menu" >
+    insert into menu
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="menuid != null" >
+        MENUID,
+      </if>
+      <if test="menuname != null" >
+        MENUNAME,
+      </if>
+      <if test="menusrc != null" >
+        MENUSRC,
+      </if>
+      <if test="parentid != null" >
+        PARENTID,
+      </if>
+      <if test="level != null" >
+        LEVEL,
+      </if>
+      <if test="ischild != null" >
+        ISCHILD,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="menuid != null" >
+        #{menuid,jdbcType=INTEGER},
+      </if>
+      <if test="menuname != null" >
+        #{menuname,jdbcType=VARCHAR},
+      </if>
+      <if test="menusrc != null" >
+        #{menusrc,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null" >
+        #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="ischild != null" >
+        #{ischild,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.hsc.demo.entity.Menu" >
+    update menu
+    <set >
+      <if test="menuname != null" >
+        MENUNAME = #{menuname,jdbcType=VARCHAR},
+      </if>
+      <if test="menusrc != null" >
+        MENUSRC = #{menusrc,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null" >
+        PARENTID = #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="level != null" >
+        LEVEL = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="ischild != null" >
+        ISCHILD = #{ischild,jdbcType=BIT},
+      </if>
+    </set>
+    where MENUID = #{menuid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.hsc.demo.entity.Menu" >
+    update menu
+    set MENUNAME = #{menuname,jdbcType=VARCHAR},
+      MENUSRC = #{menusrc,jdbcType=VARCHAR},
+      PARENTID = #{parentid,jdbcType=INTEGER},
+      LEVEL = #{level,jdbcType=INTEGER},
+      ISCHILD = #{ischild,jdbcType=BIT}
+    where MENUID = #{menuid,jdbcType=INTEGER}
+  </update>
+</mapper>
